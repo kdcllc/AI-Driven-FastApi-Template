@@ -1,0 +1,27 @@
+# Example Dockerfile for deployment
+# Build this template into a production-ready container
+
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install UV
+RUN pip install uv
+
+# Copy project files
+COPY pyproject.toml ./
+COPY src/ ./src/
+
+# Install dependencies (production only)
+RUN uv sync --no-dev
+
+# Expose port
+EXPOSE 8000
+
+# Set environment variables
+ENV PYTHONPATH=/app/src
+ENV ENVIRONMENT=production
+ENV DEBUG=false
+
+# Run the application
+CMD ["uv", "run", "python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
