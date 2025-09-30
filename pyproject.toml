@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [
-    { name = "kdcllc", email = "" }
+    { name = "kdcllc", email = "info@kingdavidconsulting.com" }
 ]
 keywords = ["fastapi", "ai", "agentic", "template", "uv"]
 classifiers = [

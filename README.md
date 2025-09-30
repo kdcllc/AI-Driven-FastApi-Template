@@ -1,6 +1,21 @@
 # AI-Driven FastAPI Template
 
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/kdcllc/AI-Driven-FastApi-Template/master/LICENSE)
+
 A modern, production-ready FastAPI template optimized for AI-driven development workflows with UV dependency management.
+
+![Stand With Israel](./img/IStandWithIsrael.png)
+
+## Hire me
+
+Please send [email](mailto:info@kingdavidconsulting.com) if you consider to **hire me**.
+
+[![buymeacoffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/vyve0og)
+
+## Give a Star! :star:
+
+If you like or are using this project to learn or start your solution, please give it a star. Thanks!
+
 
 ## ✨ Features
 
@@ -23,17 +38,20 @@ A modern, production-ready FastAPI template optimized for AI-driven development 
 ### Installation
 
 1. **Clone the repository** (or use as template):
+
    ```bash
    git clone https://github.com/kdcllc/AI-Driven-FastApi-Template.git
    cd AI-Driven-FastApi-Template
    ```
 
 2. **Install UV** (if not already installed):
+
    ```bash
    curl -LsSf https://astral.sh/uv/install.sh | sh
    ```
 
 3. **Install dependencies**:
+
    ```bash
    make install
    # or
@@ -41,6 +59,7 @@ A modern, production-ready FastAPI template optimized for AI-driven development 
    ```
 
 4. **Install development dependencies**:
+
    ```bash
    make dev
    # or
@@ -56,26 +75,30 @@ A modern, production-ready FastAPI template optimized for AI-driven development 
 ### Running the Application
 
 **Using Make**:
+
 ```bash
 make run
 ```
 
 **Using UV directly**:
+
 ```bash
 cd src
 uv run python -m uvicorn app.main:app --reload
 ```
 
 **Using the run script**:
+
 ```bash
 cd src
 uv run python run.py
 ```
 
 The API will be available at:
-- **API**: http://localhost:8000
-- **Docs**: http://localhost:8000/api/docs
-- **ReDoc**: http://localhost:8000/api/redoc
+
+- **API**: http://localhost:1212
+- **Docs**: http://localhost:1212/api/docs
+- **ReDoc**: http://localhost:1212/api/redoc
 
 ## 📁 Project Structure
 
@@ -119,6 +142,7 @@ The API will be available at:
 ## 🧪 Testing
 
 Run tests:
+
 ```bash
 make test
 # or
@@ -126,6 +150,7 @@ uv run pytest
 ```
 
 Run tests with coverage:
+
 ```bash
 uv run pytest --cov=app --cov-report=html
 ```
@@ -133,6 +158,7 @@ uv run pytest --cov=app --cov-report=html
 ## 🎨 Code Quality
 
 **Linting**:
+
 ```bash
 make lint
 # or
@@ -141,6 +167,7 @@ uv run mypy src/app
 ```
 
 **Formatting**:
+
 ```bash
 make format
 # or
@@ -155,11 +182,13 @@ This template includes specialized GitHub Copilot chat modes and prompts to enha
 ### Chat Modes (`.github/chatmodes/`)
 
 1. **Code Review Mode** (`code-review.md`)
+
    - Security-first code review
    - Best practices validation
    - Performance optimization suggestions
 
 2. **Feature Development Mode** (`feature-development.md`)
+
    - Guided feature implementation
    - TDD workflow support
    - Project structure patterns
@@ -172,10 +201,12 @@ This template includes specialized GitHub Copilot chat modes and prompts to enha
 ### Prompts (`.github/prompts/`)
 
 1. **API Endpoint Prompt** (`api-endpoint.md`)
+
    - Template for new API endpoints
    - Validation and error handling patterns
 
 2. **Test Writing Prompt** (`test-writing.md`)
+
    - Comprehensive test patterns
    - Coverage guidelines
 
@@ -186,6 +217,7 @@ This template includes specialized GitHub Copilot chat modes and prompts to enha
 ### Using Chat Modes
 
 In GitHub Copilot Chat:
+
 1. Reference a chat mode: `@workspace /chatmode code-review`
 2. Or paste the content from `.github/chatmodes/` into your chat
 
@@ -202,6 +234,7 @@ This template includes pre-configured VS Code settings:
 ### Recommended Extensions
 
 Install all recommended extensions:
+
 1. Open VS Code
 2. Go to Extensions (Ctrl+Shift+X)
 3. Search for `@recommended`
@@ -232,10 +265,12 @@ Install all recommended extensions:
 ## 🔧 Configuration
 
 Configuration is managed through:
+
 1. Environment variables (`.env` file)
 2. `src/app/core/config.py` using pydantic-settings
 
 Key configuration options:
+
 - `ENVIRONMENT`: development, staging, production
 - `DEBUG`: Enable debug mode
 - `HOST`: Server host
@@ -245,16 +280,19 @@ Key configuration options:
 ## 📚 Development Workflow
 
 1. **Create a feature branch**:
+
    ```bash
    git checkout -b feature/my-feature
    ```
 
 2. **Develop with AI assistance**:
+
    - Use GitHub Copilot chat modes
    - Reference prompts for common patterns
    - Follow TDD practices
 
 3. **Test your changes**:
+
    ```bash
    make test
    make lint
@@ -286,12 +324,13 @@ COPY . .
 RUN uv sync --no-dev
 
 # Run the application
-CMD ["uv", "run", "python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uv", "run", "python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "1212"]
 ```
 
 ### Environment Variables for Production
 
 Update `.env` for production:
+
 - Set `ENVIRONMENT=production`
 - Set `DEBUG=false`
 - Set `RELOAD=false`
@@ -319,6 +358,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📧 Support
 
 For issues and questions:
+
 - Open an issue on GitHub
 - Check existing documentation
 - Use AI chat modes for development guidance

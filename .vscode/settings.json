@@ -1,14 +1,14 @@
 {
   "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
   "python.terminal.activateEnvironment": true,
-  
+
   // Linting and formatting
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit",
     "source.fixAll": "explicit"
   },
-  
+
   // Ruff (linting and formatting)
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
@@ -18,24 +18,22 @@
       "source.organizeImports": "explicit"
     }
   },
-  
+
   // Python testing
   "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": false,
-  "python.testing.pytestArgs": [
-    "tests"
-  ],
-  
+  "python.testing.pytestArgs": ["tests"],
+
   // Type checking
   "python.analysis.typeCheckingMode": "basic",
   "python.analysis.autoImportCompletions": true,
-  
+
   // Editor settings
   "editor.rulers": [100],
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
-  
+
   // Files to exclude from search
   "files.exclude": {
     "**/__pycache__": true,
@@ -45,11 +43,20 @@
     "**/.ruff_cache": true,
     "**/node_modules": true
   },
-  
+
   // AI-specific settings
   "github.copilot.enable": {
     "*": true,
     "python": true,
     "markdown": true
-  }
+  },
+
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "file": ".github/instructions/commit-message.instructions.md"
+    }
+  ],
+
+  "github.copilot.chat.codesearch.enabled": true,
+  "chat.agent.maxRequests": 100
 }
