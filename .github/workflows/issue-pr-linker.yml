@@ -1,0 +1,112 @@
+name: Issue-PR Linker
+
+on:
+  pull_request:
+    types: [opened, edited]
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  link-issue-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Link related issues and PRs
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const eventName = context.eventName;
+            
+            if (eventName === 'pull_request') {
+              const prNumber = context.payload.pull_request.number;
+              const prBody = context.payload.pull_request.body || '';
+              
+              // Extract issue numbers from PR body
+              const issuePattern = /(fix|fixes|fixed|close|closes|closed|resolve|resolves|resolved)\s+#(\d+)/gi;
+              const matches = [...prBody.matchAll(issuePattern)];
+              
+              if (matches.length > 0) {
+                const issueNumbers = matches.map(m => m[2]);
+                const uniqueIssues = [...new Set(issueNumbers)];
+                
+                console.log(`Found references to issues: ${uniqueIssues.join(', ')}`);
+                
+                // Add comment to each referenced issue
+                for (const issueNum of uniqueIssues) {
+                  try {
+                    await github.rest.issues.createComment({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      issue_number: parseInt(issueNum),
+                      body: `🔗 This issue is referenced in PR #${prNumber}`
+                    });
+                  } catch (error) {
+                    console.log(`Could not comment on issue #${issueNum}: ${error.message}`);
+                  }
+                }
+              }
+            } else if (eventName === 'issues') {
+              const issueNumber = context.payload.issue.number;
+              const issueBody = context.payload.issue.body || '';
+              
+              // Extract PR numbers from issue body
+              const prPattern = /(related to|see also|similar to)\s+#(\d+)/gi;
+              const matches = [...issueBody.matchAll(prPattern)];
+              
+              if (matches.length > 0) {
+                const prNumbers = matches.map(m => m[2]);
+                const uniquePRs = [...new Set(prNumbers)];
+                
+                console.log(`Found references to PRs: ${uniquePRs.join(', ')}`);
+                
+                // Add comment to each referenced PR
+                for (const prNum of uniquePRs) {
+                  try {
+                    await github.rest.issues.createComment({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      issue_number: parseInt(prNum),
+                      body: `🔗 This PR is referenced in issue #${issueNumber}`
+                    });
+                  } catch (error) {
+                    console.log(`Could not comment on PR #${prNum}: ${error.message}`);
+                  }
+                }
+              }
+            }
+
+      - name: Check for conventional commit format
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prTitle = context.payload.pull_request.title;
+            const prNumber = context.payload.pull_request.number;
+            
+            // Check if PR title follows conventional commit format
+            const conventionalPattern = /^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?!?:\s.+/;
+            
+            if (!conventionalPattern.test(prTitle)) {
+              const message = '📝 **Note:** This PR title does not follow the conventional commit format.\n\n' +
+                'Consider using one of these prefixes:\n' +
+                '- `feat:` - New feature\n' +
+                '- `fix:` - Bug fix\n' +
+                '- `docs:` - Documentation changes\n' +
+                '- `test:` - Test additions or changes\n' +
+                '- `refactor:` - Code refactoring\n' +
+                '- `chore:` - Maintenance tasks\n' +
+                '- `style:` - Code style changes\n\n' +
+                'Example: `feat: add user authentication endpoint`\n\n' +
+                'See [CONTRIBUTING.md](./CONTRIBUTING.md) for more details.';
+              
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: message
+              });
+            }

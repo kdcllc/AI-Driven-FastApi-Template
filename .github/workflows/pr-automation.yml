@@ -1,0 +1,100 @@
+name: PR Auto-Label
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  auto-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto-label based on branch name
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prTitle = context.payload.pull_request.title;
+            const branchName = context.payload.pull_request.head.ref;
+            const labels = [];
+
+            // Label based on branch name prefix
+            if (branchName.startsWith('feat/') || branchName.startsWith('feature/')) {
+              labels.push('enhancement');
+            } else if (branchName.startsWith('fix/') || branchName.startsWith('bugfix/')) {
+              labels.push('bug');
+            } else if (branchName.startsWith('docs/') || branchName.startsWith('doc/')) {
+              labels.push('documentation');
+            } else if (branchName.startsWith('test/') || branchName.startsWith('tests/')) {
+              labels.push('test');
+            } else if (branchName.startsWith('refactor/')) {
+              labels.push('refactor');
+            } else if (branchName.startsWith('chore/')) {
+              labels.push('chore');
+            } else if (branchName.startsWith('update/')) {
+              labels.push('update');
+            }
+
+            // Label based on PR title prefix
+            const titleLower = prTitle.toLowerCase();
+            if (titleLower.startsWith('feat:') || titleLower.startsWith('[feature]')) {
+              labels.push('enhancement');
+            } else if (titleLower.startsWith('fix:') || titleLower.startsWith('[bug]')) {
+              labels.push('bug');
+            } else if (titleLower.startsWith('docs:') || titleLower.startsWith('[docs]')) {
+              labels.push('documentation');
+            } else if (titleLower.startsWith('test:') || titleLower.startsWith('[test]')) {
+              labels.push('test');
+            } else if (titleLower.startsWith('refactor:') || titleLower.startsWith('[refactor]')) {
+              labels.push('refactor');
+            } else if (titleLower.startsWith('chore:') || titleLower.startsWith('[chore]')) {
+              labels.push('chore');
+            } else if (titleLower.startsWith('update:') || titleLower.startsWith('[update]')) {
+              labels.push('update');
+            }
+
+            // Remove duplicates
+            const uniqueLabels = [...new Set(labels)];
+
+            if (uniqueLabels.length > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                labels: uniqueLabels
+              });
+              console.log(`Added labels: ${uniqueLabels.join(', ')}`);
+            }
+
+      - name: Check PR description
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prBody = context.payload.pull_request.body || '';
+            const prNumber = context.payload.pull_request.number;
+            
+            // Check if PR description is empty
+            if (!prBody.trim()) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: '⚠️ This PR has an empty description. Please add a description explaining:\n- What changes were made\n- Why these changes were needed\n- How to test these changes\n\nRefer to the [PR template](.github/pull_request_template.md) for guidance.'
+              });
+            }
+
+            // Check if PR references an issue
+            const issuePattern = /#\d+|https:\/\/github\.com\/[^\/]+\/[^\/]+\/issues\/\d+/g;
+            const hasIssueReference = issuePattern.test(prBody);
+            
+            if (!hasIssueReference) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: '💡 Tip: Consider linking this PR to a related issue using keywords like:\n- `Fixes #123`\n- `Closes #123`\n- `Resolves #123`\n- `Related to #123`\n\nThis helps track the relationship between issues and PRs.'
+              });
+            }
