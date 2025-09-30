@@ -299,11 +299,22 @@ Update `.env` for production:
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run tests and linting
-5. Submit a pull request
+We welcome contributions! This project includes automated workflows to help streamline the process:
+
+1. **Fork the repository**
+2. **Create a feature branch** (e.g., `feat/your-feature`, `fix/your-bugfix`)
+3. **Make your changes** following our code style guidelines
+4. **Run tests and linting** (`make test && make lint`)
+5. **Submit a pull request** using the provided template
+
+### Automated Features
+
+- **Issue Templates**: Use templates for bugs, features, or updates
+- **Auto-labeling**: PRs are automatically labeled based on branch name/title
+- **Issue-PR Linking**: Automatic linking when using keywords like `Fixes #123`
+- **Format Validation**: Checks for conventional commit format
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 ## 📄 License
 

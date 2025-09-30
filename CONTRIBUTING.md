@@ -125,6 +125,41 @@ feat: add user authentication endpoint
    - Tag relevant maintainers
    - Address review comments promptly
 
+## Issue Templates and Automation
+
+This project uses GitHub issue templates and automated workflows to streamline contributions.
+
+### Creating Issues
+
+When creating a new issue, select the appropriate template:
+
+- **Bug Report** (`.github/ISSUE_TEMPLATE/bug_report.md`): For reporting bugs and errors
+- **Feature Request** (`.github/ISSUE_TEMPLATE/feature_request.md`): For suggesting new features
+- **Update/Enhancement** (`.github/ISSUE_TEMPLATE/update_enhancement.md`): For proposing updates to existing functionality
+
+### Automated PR Features
+
+The repository includes automated workflows that help maintain quality:
+
+1. **Auto-labeling** (`.github/workflows/pr-automation.yml`):
+   - Labels PRs based on branch name (e.g., `feat/`, `fix/`, `docs/`)
+   - Labels PRs based on title prefix (e.g., `feat:`, `fix:`, `docs:`)
+   - Checks for empty PR descriptions
+   - Reminds to link related issues
+
+2. **Issue-PR Linking** (`.github/workflows/issue-pr-linker.yml`):
+   - Automatically links issues and PRs when referenced
+   - Validates conventional commit format in PR titles
+   - Provides helpful comments for format guidance
+
+**Tip:** Use conventional commit prefixes in your branch names and PR titles to get automatic labels:
+- `feat/` or `feat:` for new features
+- `fix/` or `fix:` for bug fixes
+- `docs/` or `docs:` for documentation
+- `test/` or `test:` for tests
+- `refactor/` or `refactor:` for refactoring
+- `chore/` or `chore:` for maintenance tasks
+
 ## Project Structure
 
 ```
