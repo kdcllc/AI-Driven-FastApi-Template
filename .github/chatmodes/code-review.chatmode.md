@@ -1,4 +1,8 @@
-# Code Review Mode
+---
+description: 'Code Review Mode'
+model: GPT-4.1
+title: 'Code Review Mode'
+---
 
 ## Purpose
 This chat mode is designed for thorough code review with focus on:

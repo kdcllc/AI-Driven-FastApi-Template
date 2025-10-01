@@ -16,7 +16,7 @@ COPY src/ ./src/
 RUN uv sync --no-dev
 
 # Expose port
-EXPOSE 8000
+EXPOSE 1212
 
 # Set environment variables
 ENV PYTHONPATH=/app/src

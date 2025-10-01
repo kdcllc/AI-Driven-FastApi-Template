@@ -30,13 +30,13 @@ class Settings(BaseSettings):
     # CORS
     ALLOWED_ORIGINS: list[str] = [
         "http://localhost:3000",
-        "http://localhost:8000",
-        "http://127.0.0.1:8000",
+        "http://localhost:1212",
+        "http://127.0.0.1:1212",
     ]
 
     # Server
     HOST: str = "0.0.0.0"
-    PORT: int = 8000
+    PORT: int = 1212
     RELOAD: bool = True
 
 

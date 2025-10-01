@@ -12,11 +12,13 @@ This guide will get you up and running with the AI-Driven FastAPI Template in 5 
 ### Step 1: Install UV
 
 **On Linux/macOS:**
+
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 **Or using pip:**
+
 ```bash
 pip install uv
 ```
@@ -53,24 +55,26 @@ uv run python run.py
 ### Step 4: Test the API
 
 Open your browser and visit:
-- **API Documentation**: http://localhost:8000/api/docs
-- **Root Endpoint**: http://localhost:8000
+
+- **API Documentation**: http://localhost:1212/api/docs
+- **Root Endpoint**: http://localhost:1212
 
 Or use curl:
+
 ```bash
 # Test root endpoint
-curl http://localhost:8000
+curl http://localhost:1212
 
 # Test health endpoint
-curl http://localhost:8000/api/health
+curl http://localhost:1212/api/health
 
 # Create an item
-curl -X POST http://localhost:8000/api/example/ \
+curl -X POST http://localhost:1212/api/example/ \
   -H "Content-Type: application/json" \
   -d '{"name":"My Item","price":29.99,"quantity":1}'
 
 # Get all items
-curl http://localhost:8000/api/example/
+curl http://localhost:1212/api/example/
 ```
 
 ### Step 5: Run Tests
@@ -88,11 +92,13 @@ uv run pytest -v
 ### Development Workflow
 
 1. **Install dev dependencies**:
+
    ```bash
    make dev
    ```
 
 2. **Format and lint code**:
+
    ```bash
    make format
    make lint
@@ -111,6 +117,7 @@ uv run pytest -v
 ### Adding New Features
 
 Follow the prompts in `.github/prompts/`:
+
 - `api-endpoint.md` - Creating new API endpoints
 - `test-writing.md` - Writing tests
 - `refactoring.md` - Refactoring code
@@ -152,6 +159,7 @@ src/app/
 ## Troubleshooting
 
 ### UV not found
+
 ```bash
 # Make sure UV is in your PATH
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -161,6 +169,7 @@ pip install uv
 ```
 
 ### Import errors
+
 ```bash
 # Make sure you're in the right directory
 cd src
@@ -170,6 +179,7 @@ export PYTHONPATH=/path/to/project/src
 ```
 
 ### Tests failing
+
 ```bash
 # Reinstall dependencies
 uv sync --all-extras
